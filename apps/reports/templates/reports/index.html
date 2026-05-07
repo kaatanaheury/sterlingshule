@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Report Cards · SterlingShule{% endblock %}
+{% block content %}
+{% include "_page_header.html" with title="Report cards" subtitle="Download CBC progress reports as PDF." %}
+
+<div class="ss-card p-4 mb-4">
+  <form method="get" id="rcform" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+    <select id="assessment" class="rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2">
+      <option value="">Select assessment…</option>
+      {% for a in assessments %}<option value="{{ a.id }}">{{ a.name }} · {{ a.session.name }}</option>{% endfor %}
+    </select>
+    <select id="student" class="rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2">
+      <option value="">Select student…</option>
+      {% for s in students %}<option value="{{ s.id }}">{{ s.full_name }} ({{ s.class_level.name }})</option>{% endfor %}
+    </select>
+    <button type="button" id="dlBtn" class="bg-tropical hover:bg-tropical-dark text-white rounded-lg px-4 py-2">Generate PDF</button>
+  </form>
+</div>
+
+<p class="text-sm text-slate-500">Tip: every learner can also download their own report from this page.</p>
+
+<script>
+  document.getElementById("dlBtn").addEventListener("click", function () {
+    const a = document.getElementById("assessment").value;
+    const s = document.getElementById("student").value;
+    if (!a || !s) { alert("Please pick an assessment and a student."); return; }
+    window.open("/reports/pdf/" + a + "/" + s + "/", "_blank");
+  });
+</script>
+{% endblock %}

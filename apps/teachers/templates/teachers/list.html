@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Teachers · SterlingShule{% endblock %}
+{% block content %}
+<div class="flex items-end justify-between flex-wrap gap-3 mb-5">
+  <div>
+    <h1 class="text-2xl font-semibold text-tropical-dark dark:text-forest-200">Teachers</h1>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{{ teachers.count }} staff member{{ teachers.count|pluralize }}.</p>
+  </div>
+  <div class="flex gap-2">
+    <a href="{% url 'teachers:assignment_list' %}" class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 text-sm px-4 py-2 rounded-lg">Subject Assignments</a>
+    <a href="{% url 'teachers:bulk_upload' %}" class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 text-sm px-4 py-2 rounded-lg">↑ Bulk Upload</a>
+    <a href="{% url 'teachers:create' %}" class="bg-tropical hover:bg-tropical-dark text-white text-sm px-4 py-2 rounded-lg shadow">+ New Teacher</a>
+  </div>
+</div>
+
+<div class="ss-card overflow-hidden">
+  <table class="w-full text-sm">
+    <thead class="bg-emerald-50 dark:bg-slate-700/50 text-left">
+      <tr>
+        <th class="px-4 py-3">Teacher ID</th>
+        <th class="px-4 py-3">Name</th>
+        <th class="px-4 py-3">Role</th>
+        <th class="px-4 py-3">Class Teacher Of</th>
+        <th class="px-4 py-3">Login</th>
+        <th class="px-4 py-3 text-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+      {% for t in teachers %}
+        <tr>
+          <td class="px-4 py-3 font-mono text-xs">{{ t.teacher_id }}</td>
+          <td class="px-4 py-3 font-medium">{{ t.full_name }}</td>
+          <td class="px-4 py-3 text-slate-500">{{ t.user.get_role_display }}</td>
+          <td class="px-4 py-3 text-slate-500">
+            {% if t.class_teacher_of_stream %}
+              {{ t.class_teacher_of_class.name }} {{ t.class_teacher_of_stream.name }}
+            {% elif t.class_teacher_of_class %}
+              {{ t.class_teacher_of_class.name }}
+            {% else %}—{% endif %}
+          </td>
+          <td class="px-4 py-3 text-slate-500">{{ t.user.username }}</td>
+          <td class="px-4 py-3 text-right space-x-2">
+            <a href="{% url 'teachers:edit' t.pk %}" class="text-xs px-3 py-1 rounded bg-slate-200 dark:bg-slate-600">Edit</a>
+            <a href="{% url 'teachers:delete' t.pk %}" class="text-xs px-3 py-1 rounded bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-200">Delete</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="6" class="px-4 py-8 text-center text-slate-500">No teachers yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% load ss_forms %}
+{% if form.non_field_errors %}
+  <div class="bg-red-50 border border-red-200 text-red-700 dark:bg-red-900/30 dark:border-red-700 dark:text-red-200 rounded-lg px-4 py-2 text-sm">
+    {{ form.non_field_errors }}
+  </div>
+{% endif %}
+{% for field in form %}
+  <div>
+    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+      {{ field.label }}{% if field.field.required %} <span class="text-red-500">*</span>{% endif %}
+    </label>
+    {{ field|ss_field }}
+    {% if field.help_text %}
+      <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{{ field.help_text }}</p>
+    {% endif %}
+    {% if field.errors %}
+      <p class="text-xs text-red-600 mt-1">{{ field.errors|join:" " }}</p>
+    {% endif %}
+  </div>
+{% endfor %}

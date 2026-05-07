@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load ss_forms %}
+{% block title %}Rubric · {{ assessment.name }} · SterlingShule{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+  {% include "_page_header.html" with title="Rubric editor" subtitle=assessment.name %}
+
+  <div class="ss-card p-6">
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      {{ formset.management_form }}
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-emerald-50 dark:bg-slate-700/50 text-left">
+            <tr>
+              <th class="px-2 py-2">Order</th>
+              <th class="px-2 py-2">Label</th>
+              <th class="px-2 py-2">Min marks</th>
+              <th class="px-2 py-2">Max marks</th>
+              <th class="px-2 py-2">Points</th>
+              <th class="px-2 py-2 text-right">Delete?</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+            {% for f in formset %}
+              <tr>
+                {% for hidden in f.hidden_fields %}{{ hidden }}{% endfor %}
+                <td class="px-2 py-2 w-20">{{ f.order|ss_field }}</td>
+                <td class="px-2 py-2">{{ f.label|ss_field }}</td>
+                <td class="px-2 py-2 w-28">{{ f.min_marks|ss_field }}</td>
+                <td class="px-2 py-2 w-28">{{ f.max_marks|ss_field }}</td>
+                <td class="px-2 py-2 w-24">{{ f.points|ss_field }}</td>
+                <td class="px-2 py-2 text-right">{{ f.DELETE }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-xs text-slate-500">Standard CBC: EE 2 (90–100, 8pts), EE 1 (80–89, 7pts), ME 2 (70–79, 6pts), ME 1 (60–69, 5pts), AE 2 (50–59, 4pts), AE 1 (40–49, 3pts), BE 2 (30–39, 2pts), BE 1 (0–29, 1pt).</p>
+
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <a href="{% url 'assessments:list' %}" class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-sm">Cancel</a>
+        <button type="submit" class="px-4 py-2 rounded-lg bg-tropical hover:bg-tropical-dark text-white text-sm">Save rubric</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

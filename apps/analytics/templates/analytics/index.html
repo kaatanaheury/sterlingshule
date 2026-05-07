@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Analytics · SterlingShule{% endblock %}
+{% block content %}
+{% include "_page_header.html" with title="Analytics" subtitle="Performance insights for your school." %}
+
+<form method="get" class="ss-card p-4 mb-4 flex flex-wrap items-end gap-3">
+  <div class="flex-1 min-w-[200px]">
+    <label class="block text-xs uppercase text-slate-500 mb-1">Assessment</label>
+    <select name="assessment" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm">
+      {% for a in assessments %}
+        <option value="{{ a.id }}" {% if selected and selected.id == a.id %}selected{% endif %}>{{ a.name }} · {{ a.session.name }}</option>
+      {% empty %}
+        <option value="">No assessments yet</option>
+      {% endfor %}
+    </select>
+  </div>
+  <button class="bg-tropical hover:bg-tropical-dark text-white rounded-lg px-4 py-2 text-sm">Update</button>
+  <a href="{% url 'analytics:pdf' %}{% if selected %}?assessment={{ selected.id }}{% endif %}"
+     class="rounded-lg bg-slate-200 dark:bg-slate-700 px-4 py-2 text-sm">Download PDF</a>
+</form>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+  <div class="ss-card p-5">
+    <h3 class="font-semibold text-tropical-dark dark:text-forest-200 mb-3">Top 10 students {% if selected %}· {{ selected.name }}{% endif %}</h3>
+    <table class="w-full text-sm">
+      <thead class="text-left text-xs uppercase text-slate-500">
+        <tr><th class="py-2">#</th><th class="py-2">Name</th><th class="py-2">Class</th><th class="py-2 text-right">Marks</th><th class="py-2 text-right">Points</th></tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+        {% for t in top_students %}
+          <tr>
+            <td class="py-2">{{ forloop.counter }}</td>
+            <td class="py-2 font-medium">{{ t.student.full_name }}</td>
+            <td class="py-2 text-slate-500">{{ t.student.class_level.name }}</td>
+            <td class="py-2 text-right">{{ t.total_marks|floatformat:1 }}</td>
+            <td class="py-2 text-right">{{ t.total_points }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5" class="py-4 text-center text-slate-500">No marks recorded yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ss-card p-5">
+    <h3 class="font-semibold text-tropical-dark dark:text-forest-200 mb-3">Rubric distribution</h3>
+    {% if rubric_counts %}
+      <div class="space-y-2">
+        {% for label, count in rubric_counts.items %}
+          <div>
+            <div class="flex justify-between text-xs">
+              <span class="font-medium">{{ label }}</span><span class="text-slate-500">{{ count }}</span>
+            </div>
+            <div class="h-2 rounded bg-slate-200 dark:bg-slate-700 overflow-hidden">
+              <div class="h-full bg-tropical" style="width: {% widthratio count 1 1 %}%; max-width:100%"></div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-sm text-slate-500">No rubric data yet.</p>
+    {% endif %}
+  </div>
+
+  <div class="ss-card p-5">
+    <h3 class="font-semibold text-tropical-dark dark:text-forest-200 mb-3">Subject averages</h3>
+    <table class="w-full text-sm">
+      <thead class="text-left text-xs uppercase text-slate-500">
+        <tr><th class="py-2">Subject</th><th class="py-2 text-right">Average</th><th class="py-2 text-right">Marks recorded</th></tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+        {% for s in subject_avg %}
+          <tr>
+            <td class="py-2">{{ s.subject__name }}</td>
+            <td class="py-2 text-right">{{ s.avg|floatformat:1 }}</td>
+            <td class="py-2 text-right text-slate-500">{{ s.count }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="3" class="py-4 text-center text-slate-500">No subject data yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ss-card p-5">
+    <h3 class="font-semibold text-tropical-dark dark:text-forest-200 mb-3">Attendance & fees</h3>
+    <div class="grid grid-cols-2 gap-3 mb-3">
+      {% for row in attendance_rows %}
+        <div class="rounded-lg bg-emerald-50 dark:bg-slate-700/50 p-3">
+          <p class="text-xs uppercase text-slate-500">{{ row.label }}</p>
+          <p class="text-lg font-semibold">{{ row.count }}</p>
+        </div>
+      {% empty %}
+        <div class="col-span-2 text-sm text-slate-500">No attendance recorded yet.</div>
+      {% endfor %}
+    </div>
+    <div class="grid grid-cols-3 gap-3">
+      <div class="rounded-lg bg-emerald-50 dark:bg-slate-700/50 p-3 text-center">
+        <p class="text-xs uppercase text-slate-500">Required</p>
+        <p class="font-semibold">{{ fees_required|floatformat:0 }}</p>
+      </div>
+      <div class="rounded-lg bg-emerald-50 dark:bg-slate-700/50 p-3 text-center">
+        <p class="text-xs uppercase text-slate-500">Paid</p>
+        <p class="font-semibold text-tropical">{{ fees_paid|floatformat:0 }}</p>
+      </div>
+      <div class="rounded-lg bg-emerald-50 dark:bg-slate-700/50 p-3 text-center">
+        <p class="text-xs uppercase text-slate-500">Balance</p>
+        <p class="font-semibold text-amber-600">{{ fees_balance|floatformat:0 }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

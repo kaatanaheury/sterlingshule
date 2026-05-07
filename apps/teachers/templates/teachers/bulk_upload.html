@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Bulk Upload Teachers · SterlingShule{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto space-y-4">
+  {% include "_page_header.html" with title="Bulk upload teachers" subtitle="CSV or Excel (.xlsx) file." %}
+
+  <div class="ss-card p-6">
+    <form method="post" enctype="multipart/form-data" class="space-y-4">
+      {% csrf_token %}
+      {% include "_form.html" %}
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <a href="{% url 'teachers:list' %}" class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-sm">Cancel</a>
+        <button type="submit" class="px-4 py-2 rounded-lg bg-tropical hover:bg-tropical-dark text-white text-sm">Upload</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="ss-card p-6 text-sm">
+    <h3 class="font-semibold text-tropical-dark dark:text-forest-200 mb-2">Required column headers</h3>
+    <code class="block bg-slate-100 dark:bg-slate-900 p-3 rounded text-xs">first_name, second_name, teacher_id, third_name, phone, email, role</code>
+    <p class="text-slate-500 dark:text-slate-400 mt-3 text-xs">
+      Role accepts <em>CLASS_TEACHER</em>, <em>SUBJECT_TEACHER</em> (default), or <em>PRINCIPAL</em>. Initial password = teacher_id; teachers will be asked to change it on first login.
+    </p>
+  </div>
+
+  {% if result %}
+    <div class="ss-card p-6">
+      <h3 class="font-semibold text-tropical-dark dark:text-forest-200 mb-2">Import result</h3>
+      <p class="text-sm">Created <strong>{{ result.created }}</strong> teacher(s).</p>
+      {% if result.errors %}
+        <ul class="text-xs text-red-600 mt-2 list-disc list-inside space-y-1">
+          {% for e in result.errors %}<li>{{ e }}</li>{% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

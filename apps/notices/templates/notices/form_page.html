@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} · SterlingShule{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+  {% include "_page_header.html" with title=title %}
+  <div class="ss-card p-6">
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      {% include "_form.html" %}
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <a href="{% url 'notices:list' %}" class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-sm">Cancel</a>
+        <button type="submit" class="px-4 py-2 rounded-lg bg-tropical hover:bg-tropical-dark text-white text-sm">Post notice</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

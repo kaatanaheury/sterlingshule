@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Sessions · SterlingShule{% endblock %}
+{% block content %}
+{% include "_page_header.html" with title="Academic Sessions" subtitle="One session can be active at a time." action_url="/academics/sessions/new/" action_label="+ New session" %}
+
+<div class="ss-card overflow-hidden">
+  <table class="w-full text-sm">
+    <thead class="bg-emerald-50 dark:bg-slate-700/50 text-left">
+      <tr>
+        <th class="px-4 py-3">Name</th>
+        <th class="px-4 py-3">Opening</th>
+        <th class="px-4 py-3">Closing</th>
+        <th class="px-4 py-3">Status</th>
+        <th class="px-4 py-3 text-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+      {% for s in sessions %}
+        <tr>
+          <td class="px-4 py-3 font-medium">{{ s.name }}</td>
+          <td class="px-4 py-3 text-slate-500">{{ s.opening_date|default:"—" }}</td>
+          <td class="px-4 py-3 text-slate-500">{{ s.closing_date|default:"—" }}</td>
+          <td class="px-4 py-3">
+            {% if s.is_active %}
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-tropical text-white text-xs">Active</span>
+            {% else %}
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-200 text-xs">Inactive</span>
+            {% endif %}
+          </td>
+          <td class="px-4 py-3 text-right space-x-2">
+            {% if not s.is_active %}
+              <a href="{% url 'academics:session_activate' s.pk %}" class="text-xs px-3 py-1 rounded bg-tropical text-white hover:bg-tropical-dark">Activate</a>
+            {% endif %}
+            <a href="{% url 'academics:session_edit' s.pk %}" class="text-xs px-3 py-1 rounded bg-slate-200 dark:bg-slate-600">Edit</a>
+            <a href="{% url 'academics:session_delete' s.pk %}" class="text-xs px-3 py-1 rounded bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-200">Delete</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="5" class="px-4 py-8 text-center text-slate-500">No sessions yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

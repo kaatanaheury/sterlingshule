@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Class Levels · SterlingShule{% endblock %}
+{% block content %}
+{% include "_page_header.html" with title="Class Levels" subtitle="Grades / classes." action_url="/academics/classes/new/" action_label="+ New class" %}
+
+<div class="ss-card overflow-hidden">
+  <table class="w-full text-sm">
+    <thead class="bg-emerald-50 dark:bg-slate-700/50 text-left">
+      <tr>
+        <th class="px-4 py-3">Order</th>
+        <th class="px-4 py-3">Name</th>
+        <th class="px-4 py-3">Streams</th>
+        <th class="px-4 py-3 text-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+      {% for c in class_levels %}
+        <tr>
+          <td class="px-4 py-3 text-slate-500">{{ c.order }}</td>
+          <td class="px-4 py-3 font-medium">{{ c.name }}</td>
+          <td class="px-4 py-3 text-slate-500">{{ c.streams.count }}</td>
+          <td class="px-4 py-3 text-right space-x-2">
+            <a href="{% url 'academics:classlevel_edit' c.pk %}" class="text-xs px-3 py-1 rounded bg-slate-200 dark:bg-slate-600">Edit</a>
+            <a href="{% url 'academics:classlevel_delete' c.pk %}" class="text-xs px-3 py-1 rounded bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-200">Delete</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4" class="px-4 py-8 text-center text-slate-500">No class levels yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

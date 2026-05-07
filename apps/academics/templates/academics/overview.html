@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Academics · SterlingShule{% endblock %}
+{% block content %}
+{% include "_page_header.html" with title="Academics" subtitle="Sessions, classes, streams, subjects and departments." %}
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+  <a href="{% url 'academics:session_list' %}" class="ss-card p-5 hover:shadow-md transition">
+    <div class="flex items-baseline justify-between">
+      <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Academic Sessions</h3>
+      <span class="text-xs text-slate-500">{{ sessions.count }}</span>
+    </div>
+    {% if active_session %}
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Active: <strong>{{ active_session.name }}</strong></p>
+    {% else %}
+      <p class="text-sm text-amber-600 mt-1">No active session set.</p>
+    {% endif %}
+  </a>
+
+  <a href="{% url 'academics:classlevel_list' %}" class="ss-card p-5 hover:shadow-md transition">
+    <div class="flex items-baseline justify-between">
+      <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Class Levels</h3>
+      <span class="text-xs text-slate-500">{{ class_levels.count }}</span>
+    </div>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Grade 1–6 etc.</p>
+  </a>
+
+  <a href="{% url 'academics:stream_list' %}" class="ss-card p-5 hover:shadow-md transition">
+    <div class="flex items-baseline justify-between">
+      <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Streams</h3>
+      <span class="text-xs text-slate-500">{{ streams.count }}</span>
+    </div>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Optional class sub-divisions.</p>
+  </a>
+
+  <a href="{% url 'academics:subject_list' %}" class="ss-card p-5 hover:shadow-md transition">
+    <div class="flex items-baseline justify-between">
+      <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Subjects</h3>
+      <span class="text-xs text-slate-500">{{ subjects.count }}</span>
+    </div>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Maths, English, Kiswahili, …</p>
+  </a>
+
+  <a href="{% url 'academics:department_list' %}" class="ss-card p-5 hover:shadow-md transition">
+    <div class="flex items-baseline justify-between">
+      <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Departments</h3>
+      <span class="text-xs text-slate-500">{{ departments.count }}</span>
+    </div>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Group teachers and assign HoDs.</p>
+  </a>
+
+</div>
+{% endblock %}

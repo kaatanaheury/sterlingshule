@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Institution Settings{% endblock %}
+{% block content %}
+<div class="ss-card p-6 max-w-3xl mx-auto">
+  <h1 class="text-xl font-semibold text-tropical-dark dark:text-forest-200 mb-1">Institution Settings</h1>
+  <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+    Institution Key: <span class="font-mono font-semibold">{{ institution.institution_key }}</span>
+  </p>
+
+  <form method="post" enctype="multipart/form-data" class="space-y-4">
+    {% csrf_token %}
+    {% for field in form %}
+      <div>
+        <label class="block text-sm font-medium mb-1" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}<p class="text-xs text-red-600 mt-1">{{ field.errors|join:" " }}</p>{% endif %}
+      </div>
+    {% endfor %}
+    <button type="submit" class="bg-tropical hover:bg-tropical-dark text-white px-5 py-2.5 rounded-md font-medium">Save</button>
+  </form>
+</div>
+
+<style>
+  input[type=text], input[type=email], textarea, input[type=file] {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid rgb(203 213 225);
+    border-radius: 0.5rem;
+    background: white;
+    color: rgb(15 23 42);
+  }
+  .dark input[type=text], .dark input[type=email], .dark textarea {
+    background: rgb(30 41 59); color: white; border-color: rgb(71 85 105);
+  }
+</style>
+{% endblock %}

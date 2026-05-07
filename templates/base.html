@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="{% if current_theme == 'dark' %}dark{% endif %}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}SterlingShule{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind config — extend with the SterlingShule tropical dark green palette
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            forest: {
+              50:  '#e6f4e6',
+              100: '#c2e3c2',
+              200: '#9bd19b',
+              300: '#73c073',
+              400: '#4baf4b',
+              500: '#2f9e2f',
+              600: '#218621',
+              700: '#157015',
+              800: '#0b5a0b',
+              900: '#024802',
+            },
+            tropical: {
+              DEFAULT: '#006400',
+              dark:    '#005000',
+              light:   '#008000',
+              accent:  '#00a000',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .ss-card { @apply bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700; }
+  </style>
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="min-h-screen bg-emerald-50/40 dark:bg-slate-900 text-slate-800 dark:text-slate-100">
+
+  {% if user.is_authenticated %}
+    {% include "_navbar.html" %}
+  {% endif %}
+
+  {% if messages %}
+    <div class="max-w-6xl mx-auto px-4 mt-4 space-y-2">
+      {% for m in messages %}
+        <div class="px-4 py-3 rounded-lg text-sm
+                    {% if m.tags == 'success' %}bg-tropical text-white
+                    {% elif m.tags == 'error' %}bg-red-600 text-white
+                    {% elif m.tags == 'warning' %}bg-amber-500 text-white
+                    {% else %}bg-forest-100 text-forest-900 dark:bg-slate-700 dark:text-slate-100{% endif %}">
+          {{ m }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="mt-12 border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
+    SterlingShule · Multi-Tenant School Management
+  </footer>
+</body>
+</html>

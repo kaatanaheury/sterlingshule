@@ -1,0 +1,303 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SterlingShule - School Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: {
+              50:  '#e6f4e6',
+              100: '#c2e3c2',
+              200: '#9bd19b',
+              300: '#73c073',
+              400: '#4baf4b',
+              500: '#2f9e2f',
+              600: '#218621',
+              700: '#157015',
+              800: '#0b5a0b',
+              900: '#024802',
+            },
+            tropical: {
+              DEFAULT: '#006400',
+              dark:    '#005000',
+              light:   '#008000',
+              accent:  '#00a000',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+
+  <!-- Navigation -->
+  <nav class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="text-2xl font-bold text-forest-700 dark:text-forest-300">
+        SterlingShule
+      </div>
+      <a href="{% url 'accounts:login' %}" class="px-6 py-2 bg-tropical text-white font-medium rounded-lg hover:bg-tropical-dark transition">
+        Login
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-forest-50 to-forest-100 dark:from-slate-800 dark:to-slate-900 py-24 px-4">
+    <div class="max-w-3xl mx-auto text-center space-y-6">
+      <h1 class="text-5xl md:text-6xl font-bold text-forest-900 dark:text-forest-100">
+        Modern School Management
+      </h1>
+      <p class="text-xl text-forest-700 dark:text-forest-300">
+        A complete platform for managing academics, assessments, attendance, fees, and student records. Designed for schools across Africa.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+        <a href="{% url 'accounts:login' %}" class="px-8 py-3 bg-tropical text-white font-medium rounded-lg hover:bg-tropical-dark transition shadow-md">
+          Login to Your School
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Offer Section -->
+  <section class="py-20 px-4 bg-white dark:bg-slate-900">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-4xl font-bold text-center mb-16 text-forest-900 dark:text-forest-100">
+        Everything Your School Needs
+      </h2>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="space-y-3">
+          <div class="w-12 h-12 bg-forest-100 dark:bg-slate-800 rounded-lg flex items-center justify-center">
+            <span class="text-xl font-bold text-forest-700 dark:text-forest-300">01</span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-900 dark:text-forest-100">CBC Assessments</h3>
+          <p class="text-forest-700 dark:text-forest-300">
+            8-level rubric-based competency assessments aligned with the Competency-Based Curriculum framework.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <div class="w-12 h-12 bg-forest-100 dark:bg-slate-800 rounded-lg flex items-center justify-center">
+            <span class="text-xl font-bold text-forest-700 dark:text-forest-300">02</span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-900 dark:text-forest-100">Attendance Tracking</h3>
+          <p class="text-forest-700 dark:text-forest-300">
+            Daily class registers with quick "mark all present" workflow. Attendance reports and analytics included.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <div class="w-12 h-12 bg-forest-100 dark:bg-slate-800 rounded-lg flex items-center justify-center">
+            <span class="text-xl font-bold text-forest-700 dark:text-forest-300">03</span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-900 dark:text-forest-100">Student Records</h3>
+          <p class="text-forest-700 dark:text-forest-300">
+            Centralized student management, CSV/XLSX bulk imports, and individual student profiles.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <div class="w-12 h-12 bg-forest-100 dark:bg-slate-800 rounded-lg flex items-center justify-center">
+            <span class="text-xl font-bold text-forest-700 dark:text-forest-300">04</span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-900 dark:text-forest-100">Fees Management</h3>
+          <p class="text-forest-700 dark:text-forest-300">
+            Fee structures, student liabilities, payment tracking, and financial reporting.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <div class="w-12 h-12 bg-forest-100 dark:bg-slate-800 rounded-lg flex items-center justify-center">
+            <span class="text-xl font-bold text-forest-700 dark:text-forest-300">05</span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-900 dark:text-forest-100">Report Cards</h3>
+          <p class="text-forest-700 dark:text-forest-300">
+            Generate PDF report cards with grades, competency levels, and school-wide analytics.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <div class="w-12 h-12 bg-forest-100 dark:bg-slate-800 rounded-lg flex items-center justify-center">
+            <span class="text-xl font-bold text-forest-700 dark:text-forest-300">06</span>
+          </div>
+          <h3 class="text-xl font-bold text-forest-900 dark:text-forest-100">Announcements</h3>
+          <p class="text-forest-700 dark:text-forest-300">
+            Post institution-wide or targeted notices to students, teachers, and parents.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="py-20 px-4 bg-forest-50 dark:bg-slate-800">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-4xl font-bold text-center mb-16 text-forest-900 dark:text-forest-100">
+        How It Works
+      </h2>
+      
+      <div class="space-y-12">
+        <!-- Step 1 -->
+        <div class="flex gap-8">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center h-12 w-12 rounded-full bg-tropical text-white font-bold">
+              1
+            </div>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold text-forest-900 dark:text-forest-100 mb-2">Your Institution</h3>
+            <p class="text-forest-700 dark:text-forest-300">
+              A Global Administrator creates your school account and automatically generates ICT Admin credentials.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex gap-8">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center h-12 w-12 rounded-full bg-tropical text-white font-bold">
+              2
+            </div>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold text-forest-900 dark:text-forest-100 mb-2">Login & Setup</h3>
+            <p class="text-forest-700 dark:text-forest-300">
+              ICT Admin logs in with institution key, username, and temporary password. Classes, subjects, and templates are pre-configured.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex gap-8">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center h-12 w-12 rounded-full bg-tropical text-white font-bold">
+              3
+            </div>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold text-forest-900 dark:text-forest-100 mb-2">Add Staff & Students</h3>
+            <p class="text-forest-700 dark:text-forest-300">
+              Create teachers, principals, and students individually or import via CSV/XLSX. Assign roles and classes instantly.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="flex gap-8">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center h-12 w-12 rounded-full bg-tropical text-white font-bold">
+              4
+            </div>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold text-forest-900 dark:text-forest-100 mb-2">Start Using</h3>
+            <p class="text-forest-700 dark:text-forest-300">
+              Teachers mark attendance and grades, ICT Admins generate reports, and students view their results instantly.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- User Roles Section -->
+  <section class="py-20 px-4 bg-white dark:bg-slate-900">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-4xl font-bold text-center mb-16 text-forest-900 dark:text-forest-100">
+        Built for Different Roles
+      </h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="border border-forest-200 dark:border-slate-700 rounded-xl p-8">
+          <h3 class="text-xl font-bold text-tropical-dark dark:text-tropical mb-3">ICT Admin</h3>
+          <p class="text-forest-700 dark:text-forest-300 mb-4">
+            Full control of your institution. Add staff, manage students, create assessments, track attendance, and generate reports.
+          </p>
+        </div>
+
+        <div class="border border-forest-200 dark:border-slate-700 rounded-xl p-8">
+          <h3 class="text-xl font-bold text-tropical-dark dark:text-tropical mb-3">Principals & Teachers</h3>
+          <p class="text-forest-700 dark:text-forest-300 mb-4">
+            Mark attendance, enter grades, view assessments, and post announcements. Role-based permissions keep data secure.
+          </p>
+        </div>
+
+        <div class="border border-forest-200 dark:border-slate-700 rounded-xl p-8">
+          <h3 class="text-xl font-bold text-tropical-dark dark:text-tropical mb-3">Students</h3>
+          <p class="text-forest-700 dark:text-forest-300 mb-4">
+            View your report cards, check grades and competency levels, and stay updated with school announcements.
+          </p>
+        </div>
+
+        <div class="border border-forest-200 dark:border-slate-700 rounded-xl p-8">
+          <h3 class="text-xl font-bold text-tropical-dark dark:text-tropical mb-3">Global Admin</h3>
+          <p class="text-forest-700 dark:text-forest-300 mb-4">
+            Manage all institutions, create new school accounts, and oversee the entire platform.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 px-4 bg-forest-900 dark:bg-slate-800">
+    <div class="max-w-3xl mx-auto text-center space-y-6">
+      <h2 class="text-4xl font-bold text-white">
+        Ready to Get Started?
+      </h2>
+      <p class="text-lg text-forest-100">
+        If you already have an account, log in with your institution key and credentials. New institutions should contact the Global Administrator.
+      </p>
+      <a href="{% url 'accounts:login' %}" class="inline-block px-8 py-3 bg-tropical text-white font-medium rounded-lg hover:bg-tropical-dark transition shadow-lg">
+        Go to Login
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 py-8 px-4 bg-white dark:bg-slate-900">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <p class="font-bold text-forest-700 dark:text-forest-300 mb-2">SterlingShule</p>
+          <p class="text-sm text-forest-600 dark:text-forest-400">Multi-tenant school management platform.</p>
+        </div>
+        <div>
+          <p class="font-bold text-forest-700 dark:text-forest-300 mb-2">Platform</p>
+          <ul class="text-sm text-forest-600 dark:text-forest-400 space-y-1">
+            <li>Assessments & Grading</li>
+            <li>Attendance Tracking</li>
+            <li>Student Records</li>
+          </ul>
+        </div>
+        <div>
+          <p class="font-bold text-forest-700 dark:text-forest-300 mb-2">Features</p>
+          <ul class="text-sm text-forest-600 dark:text-forest-400 space-y-1">
+            <li>Report Cards</li>
+            <li>Fee Management</li>
+            <li>Announcements</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-slate-200 dark:border-slate-700 pt-6 text-center text-sm text-slate-600 dark:text-slate-400">
+        <p>SterlingShule - School Management System for Africa</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

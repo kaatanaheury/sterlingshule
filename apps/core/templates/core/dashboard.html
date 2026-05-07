@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · SterlingShule{% endblock %}
+{% block content %}
+<div class="space-y-6">
+
+  <div class="ss-card p-6 bg-gradient-to-r from-tropical to-tropical-light text-white">
+    <div class="flex items-start justify-between flex-wrap gap-4">
+      <div>
+        <p class="uppercase text-xs tracking-widest opacity-80">{{ role_label }}</p>
+        <h1 class="text-2xl sm:text-3xl font-semibold">Welcome, {{ user.first_name|default:user.username }}</h1>
+        {% if institution %}
+          <p class="opacity-90 mt-1">{{ institution.name }} · Key {{ institution.institution_key }}</p>
+          {% if institution.motto %}<p class="text-sm opacity-80 mt-1">"{{ institution.motto }}"</p>{% endif %}
+        {% else %}
+          <p class="opacity-90 mt-1">You are signed in as a Global Administrator.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+    {% if user.is_ict_admin or user.is_principal or user.is_class_teacher or user.is_subject_teacher %}
+      <a href="{% url 'students:list' %}" class="ss-card p-5 hover:shadow-md transition">
+        <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Students</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">View and manage students.</p>
+      </a>
+      <a href="{% url 'assessments:list' %}" class="ss-card p-5 hover:shadow-md transition">
+        <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Assessments</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Create assessments and enter marks.</p>
+      </a>
+      <a href="{% url 'reports:index' %}" class="ss-card p-5 hover:shadow-md transition">
+        <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Report Cards</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Download CBC report cards as PDF.</p>
+      </a>
+      <a href="{% url 'attendance:overview' %}" class="ss-card p-5 hover:shadow-md transition">
+        <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Attendance</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Mark daily attendance.</p>
+      </a>
+      <a href="{% url 'notices:list' %}" class="ss-card p-5 hover:shadow-md transition">
+        <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Notices</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Read or post announcements.</p>
+      </a>
+    {% endif %}
+
+    {% if user.is_ict_admin or user.is_principal %}
+      <a href="{% url 'teachers:list' %}" class="ss-card p-5 hover:shadow-md transition">
+        <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Teachers</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Manage teaching staff.</p>
+      </a>
+      <a href="{% url 'fees:overview' %}" class="ss-card p-5 hover:shadow-md transition">
+        <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Fees</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Track fees and payments.</p>
+      </a>
+      <a href="{% url 'analytics:index' %}" class="ss-card p-5 hover:shadow-md transition">
+        <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Analysis</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Top students, rubric distribution & more.</p>
+      </a>
+      <a href="{% url 'academics:overview' %}" class="ss-card p-5 hover:shadow-md transition">
+        <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Academics</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Sessions, classes, streams, subjects, departments.</p>
+      </a>
+      <a href="{% url 'tenants:settings' %}" class="ss-card p-5 hover:shadow-md transition">
+        <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Settings</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Logo, motto, and institution info.</p>
+      </a>
+    {% endif %}
+
+    {% if user.is_superuser %}
+      <a href="/admin/" class="ss-card p-5 hover:shadow-md transition">
+        <h3 class="font-semibold text-tropical-dark dark:text-forest-200">Global Admin</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Manage all institutions and view bootstrap credentials.</p>
+      </a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

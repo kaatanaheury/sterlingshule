@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Notices · SterlingShule{% endblock %}
+{% block content %}
+{% if user.is_ict_admin or user.is_principal or user.is_superuser %}
+  {% include "_page_header.html" with title="Notices" subtitle="Announcements for learners and staff." action_url="/notices/new/" action_label="+ New notice" %}
+{% else %}
+  {% include "_page_header.html" with title="Notices" subtitle="Announcements for you." %}
+{% endif %}
+
+<div class="space-y-3">
+  {% for n in notices %}
+    <article class="ss-card p-5">
+      <header class="flex items-start justify-between flex-wrap gap-2">
+        <div>
+          <h3 class="text-lg font-semibold text-tropical-dark dark:text-forest-200">{{ n.title }}</h3>
+          <p class="text-xs text-slate-500 mt-0.5">
+            By {{ n.posted_by.username|default:"—" }} · {{ n.created_at|date:"d M Y, H:i" }}
+          </p>
+        </div>
+        {% if user.is_ict_admin or user.is_principal or user.is_superuser %}
+          <div class="flex gap-2">
+            <a href="{% url 'notices:edit' n.pk %}" class="text-xs px-3 py-1 rounded bg-slate-200 dark:bg-slate-600">Edit</a>
+            <a href="{% url 'notices:delete' n.pk %}" class="text-xs px-3 py-1 rounded bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-200">Delete</a>
+          </div>
+        {% endif %}
+      </header>
+      <p class="text-sm mt-3 whitespace-pre-line">{{ n.body }}</p>
+      <footer class="text-xs text-slate-500 mt-3 flex flex-wrap gap-2">
+        {% if n.learner_scope != 'NONE' %}<span class="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30">Learners: {{ n.get_learner_scope_display }}{% if n.target_class %} · {{ n.target_class.name }}{% endif %}{% if n.target_stream %} · {{ n.target_stream.name }}{% endif %}{% if n.target_student %} · {{ n.target_student.full_name }}{% endif %}</span>{% endif %}
+        {% if n.staff_scope != 'NONE' %}<span class="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30">Staff: {{ n.get_staff_scope_display }}{% if n.target_department %} · {{ n.target_department.name }}{% endif %}{% if n.target_staff %} · {{ n.target_staff.full_name }}{% endif %}</span>{% endif %}
+      </footer>
+    </article>
+  {% empty %}
+    <div class="ss-card p-8 text-center text-slate-500">No notices for you yet.</div>
+  {% endfor %}
+</div>
+{% endblock %}

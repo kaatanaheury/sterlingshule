@@ -1,0 +1,13 @@
+{# Usage: include with `title`, optional `subtitle`, `action_url`, `action_label` #}
+<div class="flex items-end justify-between flex-wrap gap-3 mb-5">
+  <div>
+    <h1 class="text-2xl font-semibold text-tropical-dark dark:text-forest-200">{{ title }}</h1>
+    {% if subtitle %}<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{{ subtitle }}</p>{% endif %}
+  </div>
+  {% if action_url %}
+    <a href="{{ action_url }}"
+       class="bg-tropical hover:bg-tropical-dark text-white text-sm px-4 py-2 rounded-lg shadow">
+      {{ action_label|default:"+ New" }}
+    </a>
+  {% endif %}
+</div>

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Sign in · SterlingShule{% endblock %}
+{% block content %}
+<div class="min-h-[70vh] flex items-center justify-center">
+  <div class="w-full max-w-md ss-card p-8">
+    <div class="text-center mb-6">
+      <div class="mx-auto h-14 w-14 rounded-full bg-tropical text-white flex items-center justify-center text-2xl font-bold">S</div>
+      <h1 class="mt-3 text-2xl font-semibold text-tropical-dark dark:text-forest-200">SterlingShule</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400">Sign in to your institution</p>
+    </div>
+
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="bg-red-100 text-red-700 px-3 py-2 rounded text-sm">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      {% for field in form %}
+        <div>
+          <label class="block text-sm font-medium mb-1" for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <p class="text-xs text-red-600 mt-1">{{ field.errors|join:" " }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="w-full bg-tropical hover:bg-tropical-dark text-white py-2.5 rounded-md font-medium">
+        Sign in
+      </button>
+    </form>
+
+    <p class="text-xs text-slate-500 dark:text-slate-400 mt-6 text-center">
+      Need an account? Contact your ICT Admin.
+    </p>
+  </div>
+</div>
+
+<style>
+  input[type=text], input[type=password] {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid rgb(203 213 225);
+    border-radius: 0.5rem;
+    background: white;
+    color: rgb(15 23 42);
+  }
+  .dark input[type=text], .dark input[type=password] {
+    background: rgb(30 41 59);
+    color: white;
+    border-color: rgb(71 85 105);
+  }
+  input:focus { outline: 2px solid #006400; outline-offset: 1px; }
+</style>
+{% endblock %}
