@@ -14,7 +14,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() in ("true", "1", "yes")
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["www.shule.sterlingcrestsolutions.co.ke"]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:*",

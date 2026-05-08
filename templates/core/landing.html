@@ -56,7 +56,8 @@
   </nav>
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-br from-forest-50 to-forest-100 dark:from-slate-800 dark:to-slate-900 py-24 px-4">
+  <section class="relative py-24 px-4 overflow-hidden" style="background-image: url('{% static 'images/hero-bg.jpg' %}'); background-size: cover; background-position: center;">
+  <div class="absolute inset-0 bg-black/40"></div>
     <div class="max-w-3xl mx-auto text-center space-y-6">
       <h1 class="text-5xl md:text-6xl font-bold text-forest-900 dark:text-forest-100">
         Modern School Management
@@ -64,6 +65,11 @@
       <p class="text-xl text-forest-700 dark:text-forest-300">
         A complete platform for managing academics, assessments, attendance, fees, and student records. Designed for schools across Africa.
       </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+  <a href="{% url 'accounts:login' %}" class="px-8 py-3 bg-tropical text-white font-medium rounded-lg hover:bg-tropical-dark transition shadow-md">
+    Login to Your School
+  </a>
+</div>
       <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
         <a href="{% url 'accounts:login' %}" class="px-8 py-3 bg-tropical text-white font-medium rounded-lg hover:bg-tropical-dark transition shadow-md">
           Login to Your School
@@ -160,9 +166,7 @@
           </div>
           <div>
             <h3 class="text-2xl font-bold text-forest-900 dark:text-forest-100 mb-2">Your Institution</h3>
-            <p class="text-forest-700 dark:text-forest-300">
-              A Global Administrator creates your school account and automatically generates ICT Admin credentials.
-            </p>
+           
           </div>
         </div>
 
